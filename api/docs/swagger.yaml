@@ -1,0 +1,190 @@
+definitions:
+  dal.Message:
+    properties:
+      id:
+        example: 1
+        type: integer
+      message:
+        example: it is what is it
+        type: string
+    type: object
+  util.HTTPError:
+    properties:
+      message:
+        example: status bad request
+        type: string
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /hello:
+    get:
+      description: Say hello to user
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "404": {}
+      summary: Say hello to user
+  /messages:
+    get:
+      description: Get all messages
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dal.Message'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Get all messages
+    post:
+      consumes:
+      - application/json
+      description: Add new messages
+      parameters:
+      - description: Add message
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/dal.Message'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dal.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Add new messages
+  /messages/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete message by ID
+      parameters:
+      - description: Message ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dal.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Delete message by ID
+    get:
+      consumes:
+      - application/json
+      description: Fetch message by ID
+      parameters:
+      - description: Message ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dal.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Fetch message by ID
+    put:
+      consumes:
+      - application/json
+      description: Update message by ID
+      parameters:
+      - description: Message ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update message
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/dal.Message'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dal.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Update message by ID
+  /messages/palindromeChk/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Check if the message specified by ID is a palindrome or not
+      parameters:
+      - description: Message ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.HTTPError'
+      summary: Check if the message specified by ID is a palindrome or not
+swagger: "2.0"
