@@ -38,7 +38,7 @@ images:
 
 docker-deploy-up:
 	docker-compose -f ./build/docker-deploy/docker-deploy.yaml up --build -d
-	echo "Server started at url: http://localhost:8080"
+	echo "Server started ....!!"
 	echo "The API documentation is available at url: http://localhost:8080/swagger/"
 	echo "Server runtime profiling data available at url: http://localhost:8080/debug/pprof"
 
