@@ -28,11 +28,19 @@ type App struct {
 
 func (a *App) Initialize() {
 	svcVersion := os.Getenv("SVC_VERSION")
+	if svcVersion == "" {
+		svcVersion = "/v1"
+	}
 	svcPort = os.Getenv("SVC_PORT")
 	if svcPort == "" {
 		svcPort = "8080"
 	}
-	svcPathPrefix := svcVersion + "/" + os.Getenv("SVC_PATH_PREFIX")
+	svcPathPrefix := os.Getenv("SVC_PATH_PREFIX")
+	if svcPathPrefix == "" {
+		svcPathPrefix = "messages"
+	}
+
+	svcPathPrefix = svcVersion + "/" + svcPathPrefix
 	swaggerAddr := "http://localhost:" + svcPort + "/swagger/doc.json"
 
 	a.router = mux.NewRouter()

@@ -21,7 +21,7 @@ type MySQLDriver struct {
 
 // TODO: Do away with mysql raw queries
 
-//GetMySQLDriver ... get a mysql DB driver
+// GetMySQLDriver ... get a mysql DB driver
 func GetMySQLDriver() *MySQLDriver {
 	if os.Getenv("DB_DRIVER") != "" {
 		dbdriver = os.Getenv("DB_DRIVER")
@@ -46,11 +46,11 @@ func GetMySQLDriver() *MySQLDriver {
 
 // AddMessage ... add new message
 func (db *MySQLDriver) AddMessage(msg *Message) error {
-	var statement string
-	statement = fmt.Sprintf("INSERT INTO messageDB.messages (msg) VALUES ('%s');", msg.Message)
-	if msg.ID > 0 {
-		statement = fmt.Sprintf("INSERT INTO messageDB.messages (id, msg) VALUES ('%d, %s');", msg.ID, msg.Message)
-	}
+	// var statement string
+	statement := fmt.Sprintf("INSERT INTO messageDB.messages (msg) VALUES ('%s');", msg.Message)
+	// if msg.ID > 0 {
+	// 	statement = fmt.Sprintf("INSERT INTO messageDB.messages (id, msg) VALUES ('%d, %s');", msg.ID, msg.Message)
+	// }
 	_, err := db.driver.Exec(statement)
 
 	if err != nil {
@@ -86,7 +86,7 @@ func (db *MySQLDriver) DeleteMessage(msg *Message) error {
 	return err
 }
 
-//GetAll ... get all messages
+// GetAll ... get all messages
 func (db *MySQLDriver) GetAll() ([]Message, error) {
 	statement := fmt.Sprintf("SELECT id, msg FROM messageDB.messages")
 	rows, err := db.driver.Query(statement)
